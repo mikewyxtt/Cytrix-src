@@ -35,6 +35,7 @@ namespace Console
 		void PutChar(char c, size_t position);		// Print char to screen
 	}
 
+    // functions that can be called from the kernel
 	void Println(const char* data);					// Classic print function
 	void Clear();								// Clear screen
 };
