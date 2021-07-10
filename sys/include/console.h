@@ -37,7 +37,7 @@ namespace Console
 
     // functions that can be called from the kernel
 	void Println(const char* data);					// Classic print function
-	void Clear();								// Clear screen
+	void Clear();          							// Clear screen
 };
 
 
