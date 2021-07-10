@@ -110,5 +110,5 @@ extern "C" void kernel_main(void)
 	terminal_initialize();
  
 	/* Newline support is left as an exercise. */
-	terminal_writestring("OUTPUT FROM CLANG++ Without mangling!!!\n");
+	terminal_writestring("test\n");
 }
