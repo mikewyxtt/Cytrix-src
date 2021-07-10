@@ -20,7 +20,8 @@ LDFLAGS=	-melf_i386 -nostdlib -v
 all:
 	$(AS) $(ASFLAGS) boot.s -o boot.o 
 	$(CXX) $(CXXFLAGS) kernel.cc -o kernel.o
-	$(LD) $(LDFLAGS) -T linker.ld -o kernel  boot.o kernel.o
+	$(CXX) $(CXXFLAGS) console.cc -o console.o
+	$(LD) $(LDFLAGS) -T linker.ld -o kernel  boot.o kernel.o console.o
 
 clean:
 	rm *.o kernel
