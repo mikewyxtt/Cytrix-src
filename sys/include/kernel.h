@@ -15,26 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+#ifndef __KERNEL_H__
+#define __KERNEL_H__
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <console.h>
+
+// Check if the compiler thinks you are targeting the wrong operating system.
+#if defined(__linux__)
+#error "You are not using a cross-compiler, you will most certainly run into trouble"
+#endif
  
-#include <kernel.h>
-
-using namespace Kernel;
-
-// Jump in from entry.s
-extern "C" void _init() 
-{
-    // Clear screen and init kernel
-    Console::Clear();
-
-    Console::Println("Print here\n");
-    Console::Println("And here\n");
-}
+#if !defined(__i386__)
+#error "This tutorial needs to be compiled with a ix86-elf compiler"
+#endif
 
 namespace Kernel
 {
-    
+    static void Panic();
 }
+
+#endif
