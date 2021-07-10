@@ -12,6 +12,37 @@
 #error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
  
+
+ int next();
+/*class TerminalManager
+{
+public:
+	static TerminalManager* singleton;
+    static uint16_t TerminalPosition;
+
+    void Init() {
+    	singleton = this;
+    }
+
+    uint8_t GetTerminalPositionX()
+    {
+        return (uint8_t)TerminalPosition >> 8;
+    }
+
+    uint8_t GetTerminalPositionY()
+    {
+        return (uint8_t)TerminalPosition << 8;
+    }
+
+    void SetTerminalPosition(uint8_t x, uint8_t y)
+    {
+        uint16_t finalPosition;
+
+        finalPosition = 0 << x << y;
+    }
+
+};*/
+
 /* Hardware text mode color constants. */
 enum vga_color {
 	VGA_COLOR_BLACK = 0,
@@ -39,6 +70,14 @@ static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
  
 static inline uint16_t vga_entry(unsigned char uc, uint8_t color) 
 {
+	//UC = A = 65
+	//color = do not care
+	// 00000000 01000001
+	// 01010100 00000000
+
+	// 01010100 01000001
+
+	// 0101010001000001
 	return (uint16_t) uc | (uint16_t) color << 8;
 }
  
@@ -57,6 +96,8 @@ size_t terminal_row;
 size_t terminal_column;
 uint8_t terminal_color;
 uint16_t* terminal_buffer;
+
+uint16_t* terminal_buffer_index;
  
 void terminal_initialize(void) 
 {
@@ -104,11 +145,30 @@ void terminal_writestring(const char* data)
 	terminal_write(data, strlen(data));
 }
 
+void terminal_writestring_tracked(const char* data) {
+	terminal_writestring(data);
+
+	*terminal_buffer_index += strlen(data);
+}
+
 extern "C" void kernel_main(void) 
 {
 	/* Initialize terminal interface */
 	terminal_initialize();
  
+ 	next();
 	/* Newline support is left as an exercise. */
-	terminal_writestring("test\n");
+	//terminal_writestring("test\n");
+
+	terminal_writestring_tracked("test\n");
+
+	terminal_writestring_tracked((const char*)terminal_buffer_index);
 }
+
+int next()
+{
+	return 0;
+}
+
+
+
