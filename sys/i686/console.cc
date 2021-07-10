@@ -57,3 +57,34 @@ namespace Console
     	// Clear all fonts from vram and reset cursor
     }
 }
+
+namespace Kernel
+{
+    static class TerminalManager
+    {
+    public:
+        static uint16_t TerminalPosition;
+
+        uint8_t GetTerminalPositionX()
+        {
+            return (uint8_t)TerminalPosition >> 8;
+        }
+
+        uint8_t GetTerminalPositionY()
+        {
+            return (uint8_t)TerminalPosition << 8;
+        }
+
+        void SetTerminalPosition(uint8_t x, uint8_t y)
+        {
+            uint16_t finalPosition;
+
+            finalPosition = 0 << x << y;
+        }
+    
+    };
+}
+
+// namespace Driver {
+//     TerminalManager.TerminalPosition
+// }
