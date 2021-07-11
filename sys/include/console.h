@@ -1,7 +1,7 @@
 /*
- * vga.cc
+ * console.h
  *
- * Basic VGA driver
+ * VGA console declaration
  *
  * This file is a part of <OS>
  * 
@@ -20,26 +20,24 @@
  *
  */
 
-#include "vga.h"
+#ifndef __CONSOLE_H__
+#define __CONSOLE_H__
 
-using namespace Kernel
+#include <kernel.h>
+
+namespace Kernel
 {
-    // Draw to screen
-    VGA::Draw()
+    class Console
     {
+    public:
+        static void GetPosition();
+        static void SetPosition();
+        static void PutChar(char c, size_t position);      // Print char to screen
+    	static void Println(const char* data);		// Classic print function
+    	static void Clear();          				// Clear screen
 
-    }
-
-    // Clear framebuffer
-    VGA::ClearSrc()
-    {
-
-    }
-
-    // Pull cursor position from vmem
-    VGA::GetPosition()
-    {
-        uint8_t position;
-        return position;
-    }
+        // enum Color
+    };
 }
+
+#endif

@@ -17,7 +17,7 @@
  */
 
 #include <kernel.h>
-#include "console.h"
+#include <console.h>
 
 using namespace Kernel;
 

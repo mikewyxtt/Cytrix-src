@@ -22,10 +22,10 @@ CXXFLAGS=	-march=i686 -target i386-none-elf -ffreestanding \
 LDFLAGS=	-melf_i386 -nostdlib -v
 
 # tell clang where we put our include files
-INCL=sys/include
+INCL+=sys/include
 
 # tell make location of linker script
-LDSCRIPT=	sys/i686/linker.ld
+LDSCRIPT=	sys/i386/linker.ld
 
 
 # tells make not to try and create files from these targets
@@ -34,11 +34,11 @@ LDSCRIPT=	sys/i686/linker.ld
 # default target for make
 all:
 	# assemble entry code
-	$(AS) $(ASFLAGS) sys/i686/entry.s -o entry.o
+	$(AS) $(ASFLAGS) sys/i386/entry.s -o entry.o
 
 	#compile sources using clang++
-	$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/i686/console.cc -o console.o
-	$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/kern/kmain.cc -o kmain.o
+	$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/i386/console/console.cc -o console.o
+	$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/core/kmain.cc -o kmain.o
 
 	# Link kernel object files into elf binary
 	$(LD) $(LDFLAGS) -T $(LDSCRIPT) -o kernel  entry.o kmain.o console.o
