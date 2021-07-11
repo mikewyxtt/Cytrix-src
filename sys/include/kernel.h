@@ -26,6 +26,7 @@
 // Headers from /sys/include
 #include <console.h>
 #include <panic.h>
+#include <iobus.h>
 
 // Check if the compiler thinks you are targeting the wrong operating system.
 #if defined(__linux__)
