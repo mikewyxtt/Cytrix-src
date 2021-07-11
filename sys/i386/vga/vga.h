@@ -1,4 +1,8 @@
 /*
+ * vga.h
+ *
+ * VGA driver header
+ *
  * This file is a part of <OS>
  * 
  * <OS> is free software: you can redistribute it and/or modify
@@ -15,25 +19,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#ifndef __KERNEL_H__
-#define __KERNEL_H__
 
-// Compiler headers
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <kernel.h>
 
-// Headers from /sys/include
-#include <console.h>
-#include <panic.h>
+using namespace Kernel;
 
-// Check if the compiler thinks you are targeting the wrong operating system.
-#if defined(__linux__)
-#error "You are not using a cross-compiler, you will most certainly run into trouble"
-#endif
- 
-#if !defined(__i386__)
-#error "This tutorial needs to be compiled with a ix86-elf compiler"
-#endif
+namespace Kernel
+{
+    class VGA
+    {
+    public:
+        static void ClearScr();
+        static void Draw();
 
-#endif
+    private:
+        uint8_t GetPosition(); 
+    };
+}

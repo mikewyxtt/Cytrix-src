@@ -1,6 +1,7 @@
 /*
- * VGA console header file
- * console.h
+ * vga.cc
+ *
+ * Basic VGA driver
  *
  * This file is a part of <OS>
  * 
@@ -19,26 +20,26 @@
  *
  */
 
-#ifndef __CONSOLE_H__
-#define __CONSOLE_H__
+#include "vga.h"
 
-// #include <stdbool.h>
-// #include <stddef.h>
-// #include <stdint.h>
-
-namespace Console
+using namespace Kernel
 {
-	// Encapsulate low-level VGA functions
-	namespace
-	{
-		void GetPosition();							// Return cursor position
-		void PutChar(char c, size_t position);		// Print char to screen
-	}
+    // Draw to screen
+    VGA::Draw()
+    {
 
-    // functions that can be called from the kernel
-	void Println(const char* data);					// Classic print function
-	void Clear();          							// Clear screen
-};
+    }
 
+    // Clear framebuffer
+    VGA::ClearSrc()
+    {
 
-#endif
+    }
+
+    // Pull cursor position from vmem
+    VGA::GetPosition()
+    {
+        uint8_t position;
+        return position;
+    }
+}

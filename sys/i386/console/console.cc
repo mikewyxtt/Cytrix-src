@@ -16,39 +16,32 @@
  *
  */
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <kernel.h>
+#include "console.h"
 
-#include <console.h>
+using namespace Kernel;
 
 // Basic VGA output
-namespace Console
+namespace Kernel
 {
-    namespace
+    // Get the cursor position from vga mem
+    void Console::GetPosition()
     {
-        // Get the cursor position from vga mem
-        void GetPosition()
-        {
-        	
-        	// return cursor position
-        }
+    	
+    	// return cursor position
+    }
 
-        // Print char to screen
-        void PutChar(char c, size_t position)
-        {
-        	// write 'c' to vga mem at coordinates from 'position'
-        }
+    // Print char to screen
+    void Console::PutChar(char c, size_t position)
+    {
+    	// write 'c' to vga mem at coordinates from 'position'
     }
     // Functions accessible to kmain
 
     // Print line of text
     void Console::Println(const char* data)
     {
-        /*
-    	for(size_t i = 0; i < sizeof(data); i++)			// go through each char and print
-   		   PutChar(data[i], GetPosition());
-        */
+        
     }
 
     // Clear the screen

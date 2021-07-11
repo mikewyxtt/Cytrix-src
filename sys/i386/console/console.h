@@ -1,4 +1,8 @@
 /*
+ * console.h
+ *
+ * VGA console declaration
+ *
  * This file is a part of <OS>
  * 
  * <OS> is free software: you can redistribute it and/or modify
@@ -15,25 +19,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-#ifndef __KERNEL_H__
-#define __KERNEL_H__
 
-// Compiler headers
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
+#ifndef __CONSOLE_H__
+#define __CONSOLE_H__
 
-// Headers from /sys/include
-#include <console.h>
-#include <panic.h>
+#include <kernel.h>
 
-// Check if the compiler thinks you are targeting the wrong operating system.
-#if defined(__linux__)
-#error "You are not using a cross-compiler, you will most certainly run into trouble"
-#endif
- 
-#if !defined(__i386__)
-#error "This tutorial needs to be compiled with a ix86-elf compiler"
-#endif
+using namespace Kernel;
+
+namespace Kernel
+{
+    class Console
+    {
+    public:
+        static void GetPositoin();
+        static void SetPosition();
+        static void PutChar(char c, size_t position);      // Print char to screen
+    	static void Println(const char* data);		// Classic print function
+    	static void Clear();          				// Clear screen
+
+        // enum Color
+    };
+}
 
 #endif

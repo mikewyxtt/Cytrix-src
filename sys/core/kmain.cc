@@ -16,10 +16,6 @@
  *
  */
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
- 
 #include <kernel.h>
 
 using namespace Kernel;
@@ -29,12 +25,12 @@ extern "C" void _init()
 {
     // Clear screen and init kernel
     Console::Clear();
-
+    Console::Clear();
     Console::Println("Print here\n");
     Console::Println("And here\n");
 }
 
 namespace Kernel
 {
-    
+
 }
