@@ -33,6 +33,7 @@ namespace Kernel
     {
         VGA::Cursor::SetPosition(0,0);
         // TODO: Clear screen.
+        return;
     }
     size_t Console::Cursor::GetPosition()
     {
@@ -51,7 +52,7 @@ namespace Kernel
 
     void Console::Cursor::Enable()
     {
-        
+        VGA::Cursor::Enable();
     }
 
     // Print char to screen

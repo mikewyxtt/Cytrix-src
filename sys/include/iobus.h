@@ -13,15 +13,15 @@
 
 namespace Kernel
 {
-    class IOBus
+    struct IOBus
     {
-    public:
+    //public:
     	/*
         "inline" functions that are to be used in other files/functions
         must be declared in the header. if they are not, the linker will
         return an "undefined reference" error
          */
-        static inline unsigned char Input(uint32_t Port)
+        static inline __attribute__((always_inline)) unsigned char Input(uint32_t Port)
         {
             unsigned char ret;
 
@@ -31,7 +31,7 @@ namespace Kernel
 
             return ret;
         }
-        static inline void Output(uint32_t Port, unsigned char Value)
+        static inline __attribute__((always_inline)) void Output(uint32_t Port, unsigned char Value)
         {
         	#if TARGET_ARCH==i386
             __asm__ volatile ("outb %%al,%%dx": :"d" (Port), "a" (Value));

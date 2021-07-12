@@ -19,6 +19,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-include Makefile.conf
-#include $(PREFIX_DIR)/sys/arch/i386/Makefile.conf $(PREFIX_DIR)/usr/lib/mk/sys.mk
-#include $(PREFIX_DIR)/usr/lib/mk/generic.mk
+
+# include $(PREFIX_DIR)/Makefile.conf
+.PHONY: clean
+# Tell make how to assemble .s files into .o files
+entry.o : entry.s
+	echo [AS] $<
+	$(AS) $(ASFLAGS) entry.s -o entry.o
+
+# Tell make how to compile .cc files into .o files
+%.o : %.cc
+	echo [CXX] $<
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+include $(PREFIX_DIR)/Makefile.conf
+# clean:
+# 	rm -fv *.o
+# 	rm -fv kernel

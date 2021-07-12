@@ -90,11 +90,11 @@ namespace Kernel
 		/*
 			Set the cursor position by..??
 		 */
-		// Position = Y * ScreenWidth + X;
-		// IOBus::Output(0x3D4, 0x0F);
-		// IOBus::Output(0x3D5, (uint8_t)(Position & 0xFF));
-		// IOBus::Output(0x3D4, 0x0E);
-		// IOBus::Output(ox3D5, (uint8_t)((Position >> 8) & 0xFF));
-		// return;
+		uint16_t pos = Y * 80 + X;
+		IOBus::Output(0x3D4, 0x0F);
+		IOBus::Output(0x3D5, (uint8_t)(pos & 0xFF));
+		IOBus::Output(0x3D4, 0x0E);
+		IOBus::Output(0x3D5, (uint8_t)((pos >> 8) & 0xFF));
+		return;
 	}
 }

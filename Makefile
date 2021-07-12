@@ -20,81 +20,69 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
+#include Makefile.conf
 
 # [NOTE]
 # If you get a weird error from Make, ensure that there are only
 # tabs used to indent the commands inside of targets. Make whitespace
 # is not as lenient as C/C++ whitespace.
 
-# tell make what build tools we wanna use
-AS=as
-CC=clang
-CXX=clang++
-LD=/usr/local/bin/ld
-TARGET_ARCH=i386
+# Tells make not to try and create files from these targets
+.PHONY : all clean buildkernel buildworld release dbgkern
 
-# tell gnu assembler what flags we want to use while compiling
-ASFLAGS=	-march=i686 --32
-
-# tell clang (C version) what flags we want to use
-CFLAGS=		--march=i686 -target i386-none-elf -std=gnu99 \
-			-ffreestanding -O2 -Wall -Wextra
-
-# tell clang (C++ version) what flags we want to use
-CXXFLAGS=	-march=i686 -target i386-none-elf -ffreestanding \
-			-O2 -Wall -Wextra -fno-exceptions -fno-rtti \
-			-DTARGET_ARCH=$(TARGET_ARCH)
-			# -nostdinc -nostdlibinc -nobuiltininc ?
-
-# tell the gnu linker what flags we want to use at link-time
-LDFLAGS=	-melf_i386 -nostdlib -v
-
-# tell clang where we put our include files
-INCL=sys/include
-
-# tell make location of linker script
-LDSCRIPT=sys/arch/i386/linker.ld
-
-
-# tells make not to try and create files from these targets
-.PHONY : all clean dbgkern buildkernel
-
-# default target for make
-all: buildkernel
+# Default target for make
+all:
+	@echo "Building 'all' is not recommended."
+	@echo "Try 'make buildkernel'"
 
 
 buildkernel:
-	@echo "Building kernel."
+	@echo #"Building kernel."
 
-	# assemble entry code
-	@echo [AS] entry.s
-	@$(AS) $(ASFLAGS) sys/arch/i386/entry.s -o entry.o
+	@echo #"Built kernel."
 
-	#compile sources using clang++
-	@echo [CXX] console.cc
-	@$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/core/console/console.cc -o console.o
+	@echo "Linking kernel."
+	$(LD) $(LDFLAGS) -T $(LDSCRIPT) -o kernel $(OBJ_DIR)
 
-	@echo [CXX] kmain.cc
-	@$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/core/kmain.cc -o kmain.o
+buildworld: # buildkernel
+	@echo "Not defined yet. This will build all userspace apps and libs"
 
-	#@echo [CXX] iobus.cc
-	#@$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/arch/i386/drivers/iobus/iobus.cc -o iobus.o
-
-	@echo [CXX] vga.cc
-	@$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/arch/i386/drivers/vga/vga.cc -o vga.o
-
-	# Link kernel object files into elf binary
-	@echo [LD] kernel
-	@$(LD) $(LDFLAGS) -T $(LDSCRIPT) -o kernel entry.o kmain.o console.o vga.o
-
-	@ echo "Built kernel."
-
-# run 'make clean' to clean up the tree. this deletes all of the object files
+# Target to clean up the tree. This deletes all of the object files
 # and the kernel executable
 clean:
-	rm *.o kernel
+	rm -fv *.o
+	rm -fv kernel
 
-# opens qemu with the kernel flag so we can boot our kernel without a bootloader
+release: # buildkernel buildworld ?
+	@echo "Not defined yet. This call will create a bootable image and output .tar files"
+
+# Starts qemu with the '-kernel' flag so we can boot our kernel without a bootloader
+# TODO: Have it load qemu in debug mode to allow us to step through the kernel. It should
+#			also depend on the buildkernel target.
 dbgkern:
 	qemu-system-i386 -kernel kernel
+
+
+include Makefile.conf
+
+
+#	assemble entry code
+#	#@echo [AS] entry.s
+#	#@$(AS) $(ASFLAGS) sys/arch/i386/entry.s -o entry.o
+#
+#	#compile sources using clang++
+#	#@echo [CXX] console.cc
+#	#@$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/core/console/console.cc -o console.o
+#
+#	#@echo [CXX] kmain.cc
+#	#@$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/core/kmain.cc -o kmain.o
+#
+#	#@echo [CXX] iobus.cc
+#	#@$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/arch/i386/drivers/iobus/iobus.cc -o iobus.o
+#
+#	#@echo [CXX] vga.cc
+#	#@$(CXX) $(CXXFLAGS) -I $(INCL) -c sys/arch/i386/drivers/vga/vga.cc -o vga.o
+#
+#	#  Link kernel object files into elf binary
+#	# @echo [LD] kernel
+#	# @$(LD) $(LDFLAGS) -T $(LDSCRIPT) -o kernel entry.o kmain.o console.o vga.o
