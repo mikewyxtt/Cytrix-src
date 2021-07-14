@@ -69,7 +69,7 @@ namespace Kernel
 			static void Disable();
 			static size_t GetPosition();
 			static void SetPosition(uint8_t X, uint8_t Y);
-			uint16_t Position;
+			size_t Position;
 		};
 	private:
 		//uint16_t* Buffer;

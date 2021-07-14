@@ -67,13 +67,17 @@ namespace Kernel
     {
         for(int i = 0; i < String[i]; i++)
         {
+            Console::Cursor cursor;
+            cursor.Position = cursor.GetPosition();
             switch(String[i])
             {
                 case '\n':
                     // call putc
                     break;
                 default:
-                    // call putc
+                    VGA::PutChar(String[i],cursor.Position, VGA::Color::White, VGA::Color::Black);
+                    cursor.Position++;
+                    cursor.SetPosition(cursor.Position,0);
                     break;
             }
         }
