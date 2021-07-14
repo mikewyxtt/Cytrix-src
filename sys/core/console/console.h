@@ -27,16 +27,18 @@
 
 #include <kernel.h>
 
-namespace Kernel
+namespace cytrix
 {
-	class Console
-	{
-	public:
-		static void Log(const char* msg); // Print message to kernel msg buffer
-	private:
-		static void PutChar(char c);	// Print char to kernel msg buffer
-		static void show_log();
-	};
+    namespace kernel
+    {
+    	class Console
+    	{
+    	public:
+    		static void Log(const char* msg); // Print message to kernel msg buffer
+    	private:
+    		static void PutChar(char c);	// Print char to kernel msg buffer
+    		static void show_log();
+    	};
+    }
 }
-
 #endif

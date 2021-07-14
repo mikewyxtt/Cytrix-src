@@ -24,15 +24,20 @@
 
 #include <kernel.h>
 
-using namespace Kernel;
-
-// called after all arch specific initialization is done
-void main() 
+namespace cytrix
 {
-    Console::Log("Entered main().\n");
-
-    while(1)
+    namespace kernel
     {
-        // Main kernel loop to go here.
+        // called after all arch specific initialization is done
+        void main() 
+        {
+
+            Console::Log("Entered main().\n");
+
+            while(1)
+            {
+                // Main kernel loop to go here.
+            }
+        }
     }
 }

@@ -25,35 +25,37 @@
 #ifndef __IOBUS_H__
 #define __IOBUS_H__
 
-namespace Kernel
+namespace cytrix
 {
-    namespace IOBus
+    namespace kernel
     {
-    //public:
-    	/*
-            "inline" functions that are to be used in other files/functions
-            must be declared in the header. if they are not, the linker will
-            return an "undefined reference" error
-         */
-
-        static inline __attribute__((always_inline)) unsigned char Input(uint32_t Port)
+        class IOBus
         {
-            unsigned char ret;
+        	/*
+                "inline" functions that are to be called in other files/functions
+                must be declared in the header. if they are not, the linker will
+                return an "undefined reference" error
+             */
+        public:
+            static inline __attribute__((always_inline)) unsigned char Input(uint32_t Port)
+            {
+                unsigned char ret;
 
-            #if TARGET_ARCH == i386
-            __asm__ volatile ("inb %%dx,%%al":"=a" (ret):"d" (Port));
-            #endif
+                #if TARGET_ARCH == i386
+                __asm__ volatile ("inb %%dx,%%al":"=a" (ret):"d" (Port));
+                #endif
 
-            return ret;
-        }
+                return ret;
+            }
 
-        static inline __attribute__((always_inline)) void Output(uint32_t Port, unsigned char Value)
-        {
-        	#if TARGET_ARCH == i386
-            __asm__ volatile ("outb %%al,%%dx": :"d" (Port), "a" (Value));
-            #endif
-            return;
-        }
-    };
+            static inline __attribute__((always_inline)) void Output(uint32_t Port, unsigned char Value)
+            {
+            	#if TARGET_ARCH == i386
+                __asm__ volatile ("outb %%al,%%dx": :"d" (Port), "a" (Value));
+                #endif
+                return;
+            }
+        };
+    }
 }
 #endif

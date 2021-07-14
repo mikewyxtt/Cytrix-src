@@ -2,9 +2,11 @@
 #define __PANIC__H__
 #include <kernel.h>
 
-namespace Kernel
+namespace cytrix
 {
-	// static void Panic();
+	namespace kernel
+	{
+		// static void Panic();
+	}
 }
-
 #endif

@@ -24,16 +24,20 @@
 
 #include <kernel.h>
 
-using namespace Kernel;
-
-extern void main();
-
-// Jump in from entry.s
-extern "C" void _init() 
+namespace cytrix
 {
-    Console::Log("Entered _init\n");
+    namespace kernel
+    {
+        extern void main();
 
-    // Begin main kernel loop
-    Console::Log("Leaving _init\n");
-    main();
+        // Jump in from entry.s
+        extern "C" void _init() 
+        {
+            Console::Log("Entered _init\n");
+
+            // Begin main kernel loop
+            Console::Log("Leaving _init\n");
+            main();
+        }
+    }
 }
