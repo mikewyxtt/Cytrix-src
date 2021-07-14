@@ -35,20 +35,20 @@ namespace Kernel
 	class Console
 	{
 	public:
-		static void Initialize();						// Initialize the console
+		// static void Initialize();						// Initialize the console
 		static void PutChar(char Char);					// Print char to screen
 		static void Println(const char* data);			// Classic print function
-		static void Clear();							// Clear screen
+		// static void Clear();							// Clear screen
 
-		class Cursor
-		{
-		public:
-			static size_t GetPosition();				// Retrieve cursor pos from mem
-			static void SetPosition(uint8_t X, uint8_t Y);	// Set cursor position
-			static void Enable();
-			static void Disable();
-			size_t Position;
-		};
+		// class Cursor
+		// {
+		// public:
+		// 	static size_t GetPosition();				// Retrieve cursor pos from mem
+		// 	static void SetPosition(uint8_t X, uint8_t Y);	// Set cursor position
+		// 	static void Enable();
+		// 	static void Disable();
+		// 	size_t Position;
+		// };
 		
 		// VGA color map
 		//enum Color;

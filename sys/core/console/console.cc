@@ -29,65 +29,65 @@ using namespace Kernel;
 
 namespace Kernel
 {
-    void Console::Initialize()
-    {
-        VGA::Cursor::SetPosition(0,0);
-        // TODO: Clear screen.
-        return;
-    }
-    size_t Console::Cursor::GetPosition()
-    {
-        return VGA::Cursor::GetPosition();
-    }
+    // void Console::Initialize()
+    // {
+    //     VGA::Cursor::SetPosition(0,0);
+    //     // TODO: Clear screen.
+    //     return;
+    // }
+    // size_t Console::Cursor::GetPosition()
+    // {
+    //     return VGA::Cursor::GetPosition();
+    // }
 
-    void Console::Cursor::SetPosition(uint8_t X, uint8_t Y)
-    {
-        return VGA::Cursor::SetPosition(X,Y);
-    }
+    // void Console::Cursor::SetPosition(uint8_t X, uint8_t Y)
+    // {
+    //     return VGA::Cursor::SetPosition(X,Y);
+    // }
 
-    void Console::Cursor::Disable()
-    {
-        VGA::Cursor::Disable();
-    }
+    // void Console::Cursor::Disable()
+    // {
+    //     VGA::Cursor::Disable();
+    // }
 
-    void Console::Cursor::Enable()
-    {
-        VGA::Cursor::Enable();
-    }
+    // void Console::Cursor::Enable()
+    // {
+    //     VGA::Cursor::Enable();
+    // }
 
     // Print char to screen
-    void Console::PutChar(char Char)
+    void Console::PutChar(char c)
     {
-        Console::Cursor cursor;
-    	VGA::PutChar(Char, cursor.GetPosition(), VGA::Color::Black, VGA::Color::White);
+        // Console::Cursor cursor;
+    	// VGA::PutChar(Char, cursor.GetPosition(), VGA::Color::Black, VGA::Color::White);
         return;
     }
 
-    void Console::Println(const char* String)
+    void Console::Println(const char* string)
     {
-        for(int i = 0; i < String[i]; i++)
-        {
-            Console::Cursor cursor;
-            cursor.Position = cursor.GetPosition();
-            switch(String[i])
-            {
-                case '\n':
-                    // call putc
-                    break;
-                default:
-                    VGA::PutChar(String[i],cursor.Position, VGA::Color::White, VGA::Color::Black);
-                    cursor.Position++;
-                    cursor.SetPosition(cursor.Position,0);
-                    break;
-            }
-        }
+        // for(int i = 0; i < String[i]; i++)
+        // {
+        //     Console::Cursor cursor;
+        //     cursor.Position = cursor.GetPosition();
+        //     switch(string[i])
+        //     {
+        //         case '\n':
+        //             // call putc
+        //             break;
+        //         default:
+        //             VGA::PutChar(String[i],cursor.Position, VGA::Color::White, VGA::Color::Black);
+        //             cursor.Position++;
+        //             cursor.SetPosition(cursor.Position,0);
+        //             break;
+        //     }
+        // }
         return;
     }
 
-    // Clear the screen
-    void Console::Clear()
-    {
-    	// Clear all fonts from vram and reset cursor
-        return;
-    }
+    // // Clear the screen
+    // void Console::Clear()
+    // {
+    // 	// Clear all fonts from vram and reset cursor
+    //     return;
+    // }
 }

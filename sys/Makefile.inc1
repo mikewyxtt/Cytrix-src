@@ -20,16 +20,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# AS_SRCS=$(wildcard *.s)
-# AS_OBJS=$(AS_SRCS:.s=.o)
-
-# CXX_SRCS=$(wildcard *.cc)
-# CXX_OBJS=$(CXX_SRCS:.cc=.o)
-
-#OBJS:= $(SRCS:.s=.o) $(SRCS:.cc=.o) $(ARCH_SRCS:.s=.o) $(ARCH_SRCS:.cc=.o)
-
-## Standard kernel objects 
-OBJS:=	core/kmain.o
+## Common kernel objects 
+OBJS:=	core/console/console.o \
+		core/kmain.o
 
 ## Arch specific kernel objects
 #i386
