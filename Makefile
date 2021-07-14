@@ -27,24 +27,22 @@
 
 
 include ./Makefile.conf
-include $(PREFIX_DIR)/usr/lib/mk/sys.mk
-include $(PREFIX_DIR)/usr/lib/mk/srcdirs.mk
 
 # Tells make not to try and create files from these targets
-.PHONY : all clean buildkernel buildworld release dbgkern $(SYS_SRC_DIRS)
+.PHONY : all clean buildkernel buildworld release dbgkern
 
 # Default target for make
 all:
 	@echo "Building 'all' is not recommended. Supported make targets are:"
 	@echo
-	@echo "buildkernel buildworld installkernel installworld clean release dbgkern"
+	@echo "buildkernel installkernel buildworld installworld clean clean-all release dbgkern"
 	@echo
 	@echo "View README.md for more info."
 
 # Compiles kernel sources and outputs the kernel executable
-buildkernel: $(SYS_SRC_DIRS)
-	@echo "Linking kernel."
-	$(LD) $(LDFLAGS) -T $(LDSCRIPT) -o kernel $(OBJ_DIR)/*.o
+buildkernel:
+	@echo "Building Kernel..."
+	@$(MAKE) --directory=sys
 	@echo "buildkernel complete."
 
 # Compiles the base system
@@ -53,9 +51,7 @@ buildworld:
 
 # Target to clean up the tree. This deletes all object and executable files
 clean:
-	rm -fv $(OBJ_DIR)/*.o
-	rm -fv kernel
-	rm -Rfv $(OBJ_DIR)
+	$(MAKE) clean --directory=sys
 
 # Create ISO image and create .tar.xz of source files
 release: # buildkernel buildworld ?
@@ -66,13 +62,4 @@ dbgkern:
 	qemu-system-i386 -kernel kernel
 	# TODO: Have it load qemu in debug mode to allow us to step through the kernel. It should
 #			also depend on the buildkernel target.
-.PHONY: test
-test: /home/michael/OS/sys/core/kmain.o
 
-
-## Back end targets to make the main targets work
-
-# Dependency to target 'buildkernel'. Recursively runs make throughout kernel source dirs
-$(SYS_SRC_DIRS):
-	@mkdir -p $(OBJ_DIR)
-	@$(MAKE) --directory=$@

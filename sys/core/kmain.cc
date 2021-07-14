@@ -30,8 +30,8 @@ using namespace Kernel;
 extern "C" void _init() 
 {
 
-    Console::Cursor::SetPosition(0,0);
-    Console::Println("test");
+    //Console::Cursor::SetPosition(0,0);
+    //Console::Println("test");
 
     // Console::Cursor::Disable();
 }

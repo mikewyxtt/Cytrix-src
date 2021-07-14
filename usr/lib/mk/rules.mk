@@ -19,7 +19,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
+
+
 # In a nutshell, the %.o : %.* targets want to create '.o' files out of '.xyz'
 # files. To utilize these convenient functions however, you need to have
 # a target that depends on .o files. It would be very difficult to scale
@@ -30,22 +31,14 @@
 # new directory, import THIS '.mk' file, and all of the source will be built.
 # Obviously, you will need to include other '.mk' files in order to pass the
 # proper flags to the build tools.
-#
 
-AS_SRCS=$(wildcard *.s)
-AS_OBJS=$(AS_SRCS:.s=.o)
 
-CXX_SRCS=$(wildcard *.cc)
-CXX_OBJS=$(CXX_SRCS:.cc=.o)
-
-all: $(AS_OBJS) $(CXX_OBJS)
-
-# Tell make how to assemble .s files into .o files
+#Tell make how to assemble .s files into .o files
 %.o : %.s
-	@echo [AS] $<
-	@$(AS) $(ASFLAGS) $< -o $(OBJ_DIR)/$@
+	@printf 'AS\t%s\n' $<
+	@$(AS) $(ASFLAGS) $< -o $@
 
 # Tell make how to compile .cc files into .o files
 %.o : %.cc
-	@echo [CXX] $<
-	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $(OBJ_DIR)/$@
+	@printf 'CXX\t%s\n' $<
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
