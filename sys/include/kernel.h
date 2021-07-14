@@ -24,7 +24,7 @@
 #include <stdint.h>
 
 // Headers from /sys/include
-#include <console.h>
+#include <core/console/console.h>
 #include <panic.h>
 #include <iobus.h>
 

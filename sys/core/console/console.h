@@ -27,31 +27,15 @@
 
 #include <kernel.h>
 
-// TODO: create logic to determine architecture
-#include <../arch/i386/drivers/vga/vga.h>
-
 namespace Kernel
 {
 	class Console
 	{
 	public:
-		// static void Initialize();						// Initialize the console
-		static void PutChar(char Char);					// Print char to screen
-		static void Println(const char* data);			// Classic print function
-		// static void Clear();							// Clear screen
-
-		// class Cursor
-		// {
-		// public:
-		// 	static size_t GetPosition();				// Retrieve cursor pos from mem
-		// 	static void SetPosition(uint8_t X, uint8_t Y);	// Set cursor position
-		// 	static void Enable();
-		// 	static void Disable();
-		// 	size_t Position;
-		// };
-		
-		// VGA color map
-		//enum Color;
+		static void Log(const char* msg); // Print message to kernel msg buffer
+	private:
+		static void PutChar(char c);	// Print char to kernel msg buffer
+		static void show_log();
 	};
 }
 

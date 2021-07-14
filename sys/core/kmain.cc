@@ -29,9 +29,6 @@ using namespace Kernel;
 // Jump in from entry.s
 extern "C" void _init() 
 {
-
-    //Console::Cursor::SetPosition(0,0);
-    Console::Println("test");
-
-    // Console::Cursor::Disable();
+    Console::Log("_init called.\n");
+    Console::Log("Loading GDT?");
 }
