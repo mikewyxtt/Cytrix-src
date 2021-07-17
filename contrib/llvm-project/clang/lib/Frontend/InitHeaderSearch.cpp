@@ -226,6 +226,7 @@ void InitHeaderSearch::AddDefaultCIncludePaths(const llvm::Triple &triple,
   if (HSOpts.UseStandardSystemIncludes) {
     switch (os) {
     case llvm::Triple::CloudABI:
+    case llvm::Triple::Cytrix:
     case llvm::Triple::FreeBSD:
     case llvm::Triple::NetBSD:
     case llvm::Triple::OpenBSD:
