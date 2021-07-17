@@ -1,0 +1,235 @@
+//===-- sanitizer_mutex.h ---------------------------------------*- C++ -*-===//
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
+//
+// This file is a part of ThreadSanitizer/AddressSanitizer runtime.
+//
+//===----------------------------------------------------------------------===//
+
+#ifndef SANITIZER_MUTEX_H
+#define SANITIZER_MUTEX_H
+
+#include "sanitizer_atomic.h"
+#include "sanitizer_internal_defs.h"
+#include "sanitizer_libc.h"
+#include "sanitizer_thread_safety.h"
+
+namespace __sanitizer {
+
+class MUTEX StaticSpinMutex {
+ public:
+  void Init() {
+    atomic_store(&state_, 0, memory_order_relaxed);
+  }
+
+  void Lock() ACQUIRE() {
+    if (TryLock())
+      return;
+    LockSlow();
+  }
+
+  bool TryLock() TRY_ACQUIRE(true) {
+    return atomic_exchange(&state_, 1, memory_order_acquire) == 0;
+  }
+
+  void Unlock() RELEASE() { atomic_store(&state_, 0, memory_order_release); }
+
+  void CheckLocked() const CHECK_LOCKED() {
+    CHECK_EQ(atomic_load(&state_, memory_order_relaxed), 1);
+  }
+
+ private:
+  atomic_uint8_t state_;
+
+  void NOINLINE LockSlow() {
+    for (int i = 0;; i++) {
+      if (i < 10)
+        proc_yield(10);
+      else
+        internal_sched_yield();
+      if (atomic_load(&state_, memory_order_relaxed) == 0
+          && atomic_exchange(&state_, 1, memory_order_acquire) == 0)
+        return;
+    }
+  }
+};
+
+class MUTEX SpinMutex : public StaticSpinMutex {
+ public:
+  SpinMutex() {
+    Init();
+  }
+
+ private:
+  SpinMutex(const SpinMutex &) = delete;
+  void operator=(const SpinMutex &) = delete;
+};
+
+// Semaphore provides an OS-dependent way to park/unpark threads.
+// The last thread returned from Wait can destroy the object
+// (destruction-safety).
+class Semaphore {
+ public:
+  constexpr Semaphore() {}
+  Semaphore(const Semaphore &) = delete;
+  void operator=(const Semaphore &) = delete;
+
+  void Wait();
+  void Post(u32 count = 1);
+
+ private:
+  atomic_uint32_t state_ = {0};
+};
+
+void FutexWait(atomic_uint32_t *p, u32 cmp);
+void FutexWake(atomic_uint32_t *p, u32 count);
+
+class MUTEX BlockingMutex {
+ public:
+  explicit constexpr BlockingMutex(LinkerInitialized)
+      : opaque_storage_ {0, }, owner_ {0} {}
+  BlockingMutex();
+  void Lock() ACQUIRE();
+  void Unlock() RELEASE();
+
+  // This function does not guarantee an explicit check that the calling thread
+  // is the thread which owns the mutex. This behavior, while more strictly
+  // correct, causes problems in cases like StopTheWorld, where a parent thread
+  // owns the mutex but a child checks that it is locked. Rather than
+  // maintaining complex state to work around those situations, the check only
+  // checks that the mutex is owned, and assumes callers to be generally
+  // well-behaved.
+  void CheckLocked() const CHECK_LOCKED();
+
+ private:
+  // Solaris mutex_t has a member that requires 64-bit alignment.
+  ALIGNED(8) uptr opaque_storage_[10];
+  uptr owner_;  // for debugging
+};
+
+// Reader-writer spin mutex.
+class MUTEX RWMutex {
+ public:
+  RWMutex() {
+    atomic_store(&state_, kUnlocked, memory_order_relaxed);
+  }
+
+  ~RWMutex() {
+    CHECK_EQ(atomic_load(&state_, memory_order_relaxed), kUnlocked);
+  }
+
+  void Lock() ACQUIRE() {
+    u32 cmp = kUnlocked;
+    if (atomic_compare_exchange_strong(&state_, &cmp, kWriteLock,
+                                       memory_order_acquire))
+      return;
+    LockSlow();
+  }
+
+  void Unlock() RELEASE() {
+    u32 prev = atomic_fetch_sub(&state_, kWriteLock, memory_order_release);
+    DCHECK_NE(prev & kWriteLock, 0);
+    (void)prev;
+  }
+
+  void ReadLock() ACQUIRE_SHARED() {
+    u32 prev = atomic_fetch_add(&state_, kReadLock, memory_order_acquire);
+    if ((prev & kWriteLock) == 0)
+      return;
+    ReadLockSlow();
+  }
+
+  void ReadUnlock() RELEASE_SHARED() {
+    u32 prev = atomic_fetch_sub(&state_, kReadLock, memory_order_release);
+    DCHECK_EQ(prev & kWriteLock, 0);
+    DCHECK_GT(prev & ~kWriteLock, 0);
+    (void)prev;
+  }
+
+  void CheckLocked() const CHECK_LOCKED() {
+    CHECK_NE(atomic_load(&state_, memory_order_relaxed), kUnlocked);
+  }
+
+ private:
+  atomic_uint32_t state_;
+
+  enum {
+    kUnlocked = 0,
+    kWriteLock = 1,
+    kReadLock = 2
+  };
+
+  void NOINLINE LockSlow() {
+    for (int i = 0;; i++) {
+      if (i < 10)
+        proc_yield(10);
+      else
+        internal_sched_yield();
+      u32 cmp = atomic_load(&state_, memory_order_relaxed);
+      if (cmp == kUnlocked &&
+          atomic_compare_exchange_weak(&state_, &cmp, kWriteLock,
+                                       memory_order_acquire))
+          return;
+    }
+  }
+
+  void NOINLINE ReadLockSlow() {
+    for (int i = 0;; i++) {
+      if (i < 10)
+        proc_yield(10);
+      else
+        internal_sched_yield();
+      u32 prev = atomic_load(&state_, memory_order_acquire);
+      if ((prev & kWriteLock) == 0)
+        return;
+    }
+  }
+
+  RWMutex(const RWMutex &) = delete;
+  void operator=(const RWMutex &) = delete;
+};
+
+template <typename MutexType>
+class SCOPED_LOCK GenericScopedLock {
+ public:
+  explicit GenericScopedLock(MutexType *mu) ACQUIRE(mu) : mu_(mu) {
+    mu_->Lock();
+  }
+
+  ~GenericScopedLock() RELEASE() { mu_->Unlock(); }
+
+ private:
+  MutexType *mu_;
+
+  GenericScopedLock(const GenericScopedLock &) = delete;
+  void operator=(const GenericScopedLock &) = delete;
+};
+
+template <typename MutexType>
+class SCOPED_LOCK GenericScopedReadLock {
+ public:
+  explicit GenericScopedReadLock(MutexType *mu) ACQUIRE(mu) : mu_(mu) {
+    mu_->ReadLock();
+  }
+
+  ~GenericScopedReadLock() RELEASE() { mu_->ReadUnlock(); }
+
+ private:
+  MutexType *mu_;
+
+  GenericScopedReadLock(const GenericScopedReadLock &) = delete;
+  void operator=(const GenericScopedReadLock &) = delete;
+};
+
+typedef GenericScopedLock<StaticSpinMutex> SpinMutexLock;
+typedef GenericScopedLock<BlockingMutex> BlockingMutexLock;
+typedef GenericScopedLock<RWMutex> RWMutexLock;
+typedef GenericScopedReadLock<RWMutex> RWMutexReadLock;
+
+}  // namespace __sanitizer
+
+#endif  // SANITIZER_MUTEX_H
