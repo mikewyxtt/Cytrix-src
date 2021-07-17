@@ -1,4 +1,3 @@
-# NOTE: This is a subtree.
 
 # The LLVM Compiler Infrastructure
 
