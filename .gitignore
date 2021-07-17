@@ -1,3 +1,11 @@
+# Object files
 *.o
+
+# Cross-compile sysroot
+xtools
+
+# Generated binaries
 kernel
+
+# macOS generated files
 .DS_Store
