@@ -33,10 +33,11 @@ namespace cytrix
         {
 
             Console::Log("Entered main().\n");
-
             while(1)
             {
-                // Main kernel loop to go here.
+                //Main kernel loop to go here.
+                int i = 0;
+                i++;
             }
         }
     }
