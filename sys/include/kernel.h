@@ -29,9 +29,9 @@
 #include <iobus.h>
 
 // Check if the compiler thinks you are targeting the wrong operating system.
-#if defined(__linux__)
-#error "You are not using a cross-compiler, you will most certainly run into trouble"
-#endif
+// #if !defined(__CYTRIX__)
+// #error "Cytrix must be compiled with the Cytrix clang compiler. Run 'make xtools' in the source tree root to build the cross compiler"
+// #endif
  
 #if !defined(__i386__)
 #error "This tutorial needs to be compiled with a ix86-elf compiler"
