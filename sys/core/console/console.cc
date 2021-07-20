@@ -30,7 +30,7 @@ namespace cytrix
     namespace kernel
     {
         // Print 'c' to kernel message buffer
-        void Console::PutChar(char c)
+        void Console::putChar(char c)
         {
             uint16_t* dmesg = (uint16_t*)0x8000;
             
@@ -43,7 +43,7 @@ namespace cytrix
         }
 
         // Print 'string' to kernel message buffer
-        void Console::Log(const char* msg)
+        void Console::log(const char* msg)
         {
             //calculate string length
             int len = 0;
@@ -52,7 +52,7 @@ namespace cytrix
             // put each char from the string into kernel msg buffer
             for(int i = 0; i < len; i++)
             {
-                PutChar(msg[i]);
+                putChar(msg[i]);
             }
 
             // call our placeholder func to show the msg buffer on display
@@ -73,8 +73,8 @@ namespace cytrix
             uint16_t* vid_buffer = (uint16_t*)0xB8000;
 
             // Disable the cursor
-            IOBus::Output(0x3D4, 0x0A);
-            IOBus::Output(0x3D5, 0x20);
+            IOBus::output(0x3D4, 0x0A);
+            IOBus::output(0x3D5, 0x20);
 
             // clear the screen
             for(int i=0; i<(SCREEN_WIDTH * SCREEN_HEIGHT); i++)

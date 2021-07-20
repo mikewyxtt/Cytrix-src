@@ -37,7 +37,7 @@ namespace cytrix
                 return an "undefined reference" error
              */
         public:
-            static inline __attribute__((always_inline)) unsigned char Input(uint32_t Port)
+            static inline __attribute__((always_inline)) unsigned char input(uint32_t Port)
             {
                 unsigned char ret;
 
@@ -48,7 +48,7 @@ namespace cytrix
                 return ret;
             }
 
-            static inline __attribute__((always_inline)) void Output(uint32_t Port, unsigned char Value)
+            static inline __attribute__((always_inline)) void output(uint32_t Port, unsigned char Value)
             {
             	#if TARGET_ARCH == i386
                 __asm__ volatile ("outb %%al,%%dx": :"d" (Port), "a" (Value));
