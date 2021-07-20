@@ -36,12 +36,12 @@ all: kernel
 
 kernel: $(OBJS)
 	@echo 'Linking kernel...'
-	@$(LD) $(LDFLAGS) -T $(LDSCRIPT) -o kernel $(OBJS)
+	@$(LD) $(LDFLAGS) -T $(LDSCRIPT) -o kern/kernel $(OBJS)
 	@echo 'Kernel linked.'
 
 clean:
 	@echo 'Cleaning kernel tree...'
 	@rm -fv $(OBJS)
-	@rm -fv kernel
+	@rm -fv kern/kernel
 	@echo 'Cleaned kernel tree'
 	

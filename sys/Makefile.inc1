@@ -21,12 +21,12 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 ## Common kernel objects 
-OBJS:=	core/console/console.o \
-		core/main.o
+OBJS:=	kern/core/console/console.o \
+		kern/core/main.o
 
 ## Arch specific kernel objects
 #i386
 ifeq ($(TARGET_ARCH),i386)
-	OBJS+=	arch/i386/entry.o \
-			arch/i386/init.o
+	OBJS+=	kern/arch/i386/entry.o \
+			kern/arch/i386/init.o
 endif
