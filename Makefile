@@ -29,7 +29,7 @@
 include ./Makefile.conf
 
 # Tells make not to try and create files from these targets
-.PHONY : all clean buildkernel buildworld release dbgkern
+.PHONY : all clean buildkernel buildworld release dbgkern xtools
 
 # Default target for make
 all:
@@ -49,6 +49,12 @@ buildkernel:
 buildworld:
 	@echo "Not defined yet. This will build all userspace apps and libs"
 
+# Builds the cross toolchain
+xtools:
+	@echo "Building cross toolchain..."
+	cmake -DLLVM_ENABLE_PROJECTS="clang;lld" -DCLANG_VENDOR="Cytrix" -DCMAKE_INSTALL_PREFIX=$(PREFIX_DIR)/xtools -B"$(PREFIX_DIR)/xtools/llvm" -S"$(PREFIX_DIR)/contrib/llvm-project/llvm"
+	@$(MAKE) -j5 --directory=$(PREFIX_DIR)/xtools/llvm
+
 # Target to clean up the tree. This deletes all object and executable files
 clean:
 	$(MAKE) clean --directory=sys
@@ -62,4 +68,3 @@ dbgkern:
 	qemu-system-i386 -kernel sys/kernel
 #	# TODO: Have it load qemu in debug mode to allow us to step through the kernel. It should
 #			also depend on the buildkernel target.
-
