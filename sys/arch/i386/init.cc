@@ -1,6 +1,6 @@
 /*
  * This file is a part of Cytrix
- * 
+ *
  * Copyright (c) 2021
  * Michael Wyatt, All rights reserved.
  *
@@ -31,7 +31,7 @@ namespace cytrix
         extern void main();
 
         // Jump in from entry.s
-        extern "C" void _init() 
+        extern "C" void _init()
         {
             Console::Log("Entered _init\n");
 
