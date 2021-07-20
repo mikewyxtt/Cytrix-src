@@ -32,7 +32,7 @@ namespace cytrix
         void main() 
         {
 
-            Console::Log("Entered main().\n");
+            Console::log("Entered main().\n");
             while(1)
             {
                 //Main kernel loop to go here.

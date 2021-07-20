@@ -33,10 +33,10 @@ namespace cytrix
         // Jump in from entry.s
         extern "C" void _init()
         {
-            Console::Log("Entered _init\n");
+            Console::log("Entered _init\n");
 
             // Begin main kernel loop
-            Console::Log("Leaving _init\n");
+            Console::log("Leaving _init\n");
             main();
         }
     }
