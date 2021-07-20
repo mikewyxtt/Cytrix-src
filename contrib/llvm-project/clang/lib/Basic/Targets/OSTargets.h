@@ -100,7 +100,7 @@ public:
     //this->WIntType = TargetInfo::UnsignedInt;
 
     // This portion will be used in the future as we port to new architectures
-    /*
+    
     switch (Triple.getArch()) {
     default:
       break;
@@ -109,7 +109,7 @@ public:
       this->HasFloat128 = true;
       break;
     }
-    */
+
   }
 };
 
@@ -331,7 +331,7 @@ protected:
     Builder.defineMacro("__HAIKU__");
     Builder.defineMacro("__ELF__");
     DefineStd(Builder, "unix", Opts);
-    if (this->HasFloat128) 
+    if (this->HasFloat128)
       Builder.defineMacro("__FLOAT128__");
   }
 
