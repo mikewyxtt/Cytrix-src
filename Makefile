@@ -65,6 +65,6 @@ release: # buildkernel buildworld ?
 
 # Starts qemu with the '-kernel' flag so we can boot our kernel without a bootloader
 dbgkern:
-	qemu-system-i386 -kernel sys/kernel
+	qemu-system-i386 -kernel sys/kern/kernel
 #	# TODO: Have it load qemu in debug mode to allow us to step through the kernel. It should
 #			also depend on the buildkernel target.
