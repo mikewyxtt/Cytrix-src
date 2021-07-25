@@ -25,76 +25,81 @@
 #include <kernel.h>
 #include "vga.h"
 using namespace Kernel;
-
-namespace Kernel
+/*
+namespace vga
 {
+class VGA
+		{
+		private:
+			static uint16_t getCursorPosition()
+			{
+				uint16_t pos = 0;
+				outb(0x3D4, 0x0F);
+				pos |= inb(0x3D5);
+				outb(0x3D4, 0x0E);
+				pos |= ((uint16_t)inb(0x3D5)) << 8;
+				return pos;
+			}
+			static void setCursorPosition(uint16_t pos)
+			{
+				outb(0x3D4, 0x0F);
+				outb(0x3D5, (uint8_t) (pos & 0xFF));
+				outb(0x3D4, 0x0E);
+				outb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+				return;
+			}
+			static void endl()
+			{
 
-	/*inline*/ void VGA::PutChar(char Char,size_t Position, Color Foreground, Color Background)
-	{
-		/*
-        The VGA buffer begins at address 0xB8000
+			}
+			static void advanceCursor(int n)
+			{
+				setCursorPosition(getCursorPosition() + n);
+			}
 
-        Entries are made at even intervals, e.g. to print 'Hi' at the top of the screen
-        you would put 'H' at 0xB8000 and 'i' at 0xB8002.
+			static void putc(char c)
+			{
+				uint16_t* buffer = (uint16_t*)0xB8000;
+				buffer[getCursorPosition()] =
+				// VGA mem entries look like so:
+				// 00000000 00000000
+				// CCCCCCCC XBBBFFFF
+				// F: 	foreground color
+				// B: 	background color
+				// C:	ascii char
+				// X:	either tell vga it is bright color OR enables blinking..
 
-        Each entry requires 2 bytes of information. The first byte contains attributes and
-        the second contains the char itself.
+				// '0' is black, '15' is white
+				(c | (15 | 0 << 4) << 8);
 
-        The attribute byte is broken up into three different attributes. The first
-        4 bits are the background color, the following bit is a setting?, and the
-        last 3 bits are the foreground color.
+				advanceCursor(1);
+				return;
+			}
+		public:
+			static void print(const char* str)
+			{
+				//calculate string length
+				int len = 0;
+				while (str[len])
+					len++;
 
-        In this function we take the arguments that the calling function passed in
-        and write them to the video memory using this format.
-
-        The forums are saying this is backwards and that the char comes after the attribute?
-        */
-        uint16_t* Buffer = (uint16_t*)0xB8000;
-        Buffer[Position] = (Char | (Foreground | Background << 4) << 8);
-	}
-
-	// void VGA::Cursor::Enable()
-	// {
-		
-	// 		Not yet implemented. must work with scan lines and i am
-	// 		unfamiliar.
-		
-	// 	return;
-	// }
-
-	// void VGA::Cursor::Disable()
-	// {
-		
-	// 		Disable the cursor by sending the cursor disable signal??
-		 
-	// 	IOBus::Output(0x3D4, 0x0A);
-	// 	IOBus::Output(0x3D5, 0x20);
-	// 	return;
-	// }
-
-	// size_t VGA::Cursor::GetPosition()
-	// {
-	// 	/*
-	// 		Get the cursor position by..??
-	// 	 */
-	// 	uint16_t pos =0;
-	// 	IOBus::Output(0x3D4, 0x0F);
-	// 	pos |= IOBus::Input(0x3D5);
-	// 	IOBus::Output(0x3D4, 0x0E);
-	// 	pos |= ((uint16_t)IOBus::Input(0x3D5)) << 8;
-	// 	return pos;
-	// }
-
-	// void VGA::Cursor::SetPosition(uint8_t X, uint8_t Y)
-	// {
-	// 	/*
-	// 		Set the cursor position by..??
-	// 	 */
-	// 	uint16_t pos = Y * 80 + X;
-	// 	IOBus::Output(0x3D4, 0x0F);
-	// 	IOBus::Output(0x3D5, (uint8_t)(pos & 0xFF));
-	// 	IOBus::Output(0x3D4, 0x0E);
-	// 	IOBus::Output(0x3D5, (uint8_t)((pos >> 8) & 0xFF));
-	// 	return;
-	// }
+				// put each char from the string into kernel msg buffer
+				for(int i = 0; i < len; i++)
+				{
+					switch(str[i])
+					{
+						case '\n':
+							setCursorPosition((80 * (getCursorPosition() / 80)) + 80);
+							break;
+						case '\t':
+							setCursorPosition(getCursorPosition() + 4);
+							break;
+						default:
+							putc(str[i]);
+							break;
+					}
+				}
+			}
+		};
 }
+*/
