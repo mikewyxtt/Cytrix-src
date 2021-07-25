@@ -27,7 +27,7 @@
 
 #include <kernel.h>
 
-namespace kstd {
+namespace kernel {
 
     // "inline" functions that are to be called in other files/functions
     //  must be declared in the header. if they are not, the linker will
