@@ -5,7 +5,8 @@
             "includePath": [
                 "${default}",
                 "${workspaceFolder}/sys/kern/include",
-                "${workspaceFolder}/sys/kern/"
+                "${workspaceFolder}/sys/kern/",
+                "${workspaceFolder}/sys/kern/lib/include"
             ],
             "defines": [],
             "macFrameworkPath": [],
