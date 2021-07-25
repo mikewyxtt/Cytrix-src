@@ -12,7 +12,6 @@ namespace kernel {
 
 // Dummy macros so the calls to LOG don't throw errors
 #define INIT_SERIAL()
-#define SERIAL_OUT()
 #define LOG(a)
 
 #endif // __DEBUG
