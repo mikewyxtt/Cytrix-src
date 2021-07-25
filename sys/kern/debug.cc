@@ -3,7 +3,7 @@
 #ifdef __DEBUG
 
 #include <kernel.h>
-#include <iobus.h>
+#include <io.h>
 #include <debug.h>
 
 using kstd::inb;

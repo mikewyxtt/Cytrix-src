@@ -22,8 +22,10 @@
  *
  */
 
-#ifndef __IOBUS_H__
-#define __IOBUS_H__
+#ifndef __IO_H__
+#define __IO_H__
+
+#include <kernel.h>
 
 namespace kstd {
 
@@ -49,4 +51,4 @@ namespace kstd {
         return;
     }
 }
-#endif
+#endif // end __IO_H__
