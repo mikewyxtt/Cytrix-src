@@ -58,6 +58,7 @@ xtools:
 # Target to clean up the tree. This deletes all object and executable files
 clean:
 	$(MAKE) clean --directory=sys
+	rm system.log
 
 # Create ISO image and create .tar.xz of source files
 release: # buildkernel buildworld ?
@@ -65,6 +66,6 @@ release: # buildkernel buildworld ?
 
 # Starts qemu with the '-kernel' flag so we can boot our kernel without a bootloader
 dbgkern:
-	qemu-system-i386 -kernel sys/kern/kernel
+	qemu-system-i386 -kernel sys/kern/kernel -serial file:system.log
 #	# TODO: Have it load qemu in debug mode to allow us to step through the kernel. It should
 #			also depend on the buildkernel target.

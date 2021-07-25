@@ -22,17 +22,19 @@
  *
  */
 
-#include <kernel.h> // deprecated soon
-
+#include <kernel.h>
 #include <kstdio.h>
+#include <debug.h>
 
 using namespace kstd;
 
 namespace kernel {
+
     // called after all arch specific initialization is done
     void main() 
     {
-        log("Entered main()\n");
+        LOG("Entered main.\n");
+
         while(1)
         {
             //Main kernel loop to go here.

@@ -22,7 +22,8 @@
 
 ## Common kernel objects 
 OBJS:=	kern/lib/kstdio.o \
-		kern/core/main.o
+		kern/core/main.o\
+		kern/debug.o
 
 ## Arch specific kernel objects
 #i386

@@ -22,9 +22,10 @@
  *
  */
 
-#include <kernel.h> // deprecated
-
+#include <kernel.h>
+#include <debug.h>
 #include <kstdio.h>
+
 using namespace kstd;
 
 namespace kernel {
@@ -33,10 +34,14 @@ namespace kernel {
     // Jump in from entry.s
     extern "C" void _init()
     {
-        log("Entered _init\n");
+        // Initialize the serial console if we debugging is enabled
+        #ifdef __DEBUG
+        INIT_SERIAL();
+        #endif
+        LOG("Entered _init\n");
 
         // Begin main kernel loop
-        log("Leaving _init\n");
+        LOG("Leaving _init\n");
         main();
     }
 }

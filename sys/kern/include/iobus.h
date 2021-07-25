@@ -25,8 +25,7 @@
 #ifndef __IOBUS_H__
 #define __IOBUS_H__
 
-namespace kernel {
-namespace iobus {
+namespace kstd {
 
     // "inline" functions that are to be called in other files/functions
     //  must be declared in the header. if they are not, the linker will
@@ -49,6 +48,5 @@ namespace iobus {
         #endif
         return;
     }
-}
 }
 #endif
