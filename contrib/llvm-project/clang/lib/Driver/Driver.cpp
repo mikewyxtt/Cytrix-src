@@ -19,7 +19,7 @@
 #include "ToolChains/Contiki.h"
 #include "ToolChains/CrossWindows.h"
 #include "ToolChains/Cuda.h"
-#include "ToolChains/Cytrix.h"
+#include "ToolChains/Chimera.h"
 #include "ToolChains/Darwin.h"
 #include "ToolChains/DragonFly.h"
 #include "ToolChains/FreeBSD.h"
@@ -5272,8 +5272,8 @@ const ToolChain &Driver::getToolChain(const ArgList &Args,
     case llvm::Triple::CloudABI:
       TC = std::make_unique<toolchains::CloudABI>(*this, Target, Args);
       break;
-    case llvm::Triple::Cytrix:
-      TC = std::make_unique<toolchains::Cytrix>(*this, Target, Args);
+    case llvm::Triple::Chimera:
+      TC = std::make_unique<toolchains::Chimera>(*this, Target, Args);
       break;
     case llvm::Triple::Darwin:
     case llvm::Triple::MacOSX:

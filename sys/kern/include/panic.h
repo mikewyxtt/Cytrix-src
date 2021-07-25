@@ -2,7 +2,7 @@
 #define __PANIC__H__
 #include <kernel.h>
 
-namespace cytrix
+namespace chimera
 {
 	namespace kernel
 	{

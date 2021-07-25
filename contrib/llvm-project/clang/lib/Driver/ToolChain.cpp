@@ -394,8 +394,8 @@ StringRef ToolChain::getOSLibName() const {
     return "darwin";
 
   switch (Triple.getOS()) {
-  case llvm::Triple::Cytrix:
-    return "cytrix";
+  case llvm::Triple::Chimera:
+    return "chimera";
   case llvm::Triple::FreeBSD:
     return "freebsd";
   case llvm::Triple::NetBSD:

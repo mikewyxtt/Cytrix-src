@@ -195,7 +195,7 @@ StringRef Triple::getOSTypeName(OSType Kind) {
   case CUDA: return "cuda";
   case CloudABI: return "cloudabi";
   case Contiki: return "contiki";
-  case Cytrix: return "cytrix";
+  case Chimera: return "chimera";
   case Darwin: return "darwin";
   case DragonFly: return "dragonfly";
   case ELFIAMCU: return "elfiamcu";
@@ -505,7 +505,7 @@ static Triple::OSType parseOS(StringRef OSName) {
   return StringSwitch<Triple::OSType>(OSName)
     .StartsWith("ananas", Triple::Ananas)
     .StartsWith("cloudabi", Triple::CloudABI)
-    .StartsWith("cytrix", Triple::Cytrix)
+    .StartsWith("chimera", Triple::Chimera)
     .StartsWith("darwin", Triple::Darwin)
     .StartsWith("dragonfly", Triple::DragonFly)
     .StartsWith("freebsd", Triple::FreeBSD)

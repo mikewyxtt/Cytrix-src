@@ -1,4 +1,4 @@
-//===--- Cytrix.h - Cytrix ToolChain Implementations ----------*- C++ -*-===//
+//===--- Chimera.h - Chimera ToolChain Implementations ----------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
@@ -6,8 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_CYTRIX_H
-#define LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_CYTRIX_H
+#ifndef LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_CHIMERA_H
+#define LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_CHIMERA_H
 
 #include "Gnu.h"
 #include "clang/Driver/Driver.h"
@@ -17,9 +17,9 @@ namespace clang {
 namespace driver {
 namespace toolchains {
 
-class LLVM_LIBRARY_VISIBILITY Cytrix : public Generic_ELF {
+class LLVM_LIBRARY_VISIBILITY Chimera : public Generic_ELF {
 public:
-  Cytrix(const Driver &D, const llvm::Triple &Triple,
+  Chimera(const Driver &D, const llvm::Triple &Triple,
           const llvm::opt::ArgList &Args);
   bool HasNativeLLVMSupport() const override;
 
@@ -34,7 +34,7 @@ public:
   void AddCXXStdlibLibArgs(const llvm::opt::ArgList &Args,
                            llvm::opt::ArgStringList &CmdArgs) const override;
   // Until dtrace (via CTF) and LLDB can deal with distributed debug info,
-  // Cytrix defaults to standalone/full debug info.
+  // Chimera defaults to standalone/full debug info.
   bool GetDefaultStandaloneDebug() const override { return true; }
   void
   addClangTargetOptions(const llvm::opt::ArgList &DriverArgs,
@@ -50,4 +50,4 @@ protected:
 } // end namespace driver
 } // end namespace clang
 
-#endif // LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_CYTRIX_H
+#endif // LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_CHIMERA_H

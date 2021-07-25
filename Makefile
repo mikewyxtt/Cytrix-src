@@ -1,5 +1,5 @@
 #
-# This file is a part of Cytrix
+# This file is a part of Chimera
 #
 # Copyright (c) 2021
 # Michael Wyatt, All rights reserved.
@@ -7,12 +7,12 @@
 # This file contains code from:
 # Michael Wyatt
 #
-# Cytrix is free software: you can redistribute it and/or modify
+# Chimera is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# Cytrix is distributed in the hope that it will be useful,
+# Chimera is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -52,7 +52,7 @@ buildworld:
 # Builds the cross toolchain
 xtools:
 	@echo "Building cross toolchain..."
-	cmake -DLLVM_ENABLE_PROJECTS="clang;lld" -DCLANG_VENDOR="Cytrix" -DCMAKE_INSTALL_PREFIX=$(PREFIX_DIR)/xtools -B"$(PREFIX_DIR)/xtools/llvm" -S"$(PREFIX_DIR)/contrib/llvm-project/llvm"
+	cmake -DLLVM_ENABLE_PROJECTS="clang;lld" -DCLANG_VENDOR="Chimera" -DCMAKE_INSTALL_PREFIX=$(PREFIX_DIR)/xtools -B"$(PREFIX_DIR)/xtools/llvm" -S"$(PREFIX_DIR)/contrib/llvm-project/llvm"
 	@$(MAKE) -j5 --directory=$(PREFIX_DIR)/xtools/llvm
 
 # Target to clean up the tree. This deletes all object and executable files

@@ -74,16 +74,16 @@ void getDarwinDefines(MacroBuilder &Builder, const LangOptions &Opts,
                       const llvm::Triple &Triple, StringRef &PlatformName,
                       VersionTuple &PlatformMinVersion);
 
-// Cytrix Target Info
+// Chimera Target Info
 template <typename Target>
-class LLVM_LIBRARY_VISIBILITY CytrixTargetInfo : public OSTargetInfo<Target> {
+class LLVM_LIBRARY_VISIBILITY ChimeraTargetInfo : public OSTargetInfo<Target> {
 protected:
   void getOSDefines(const LangOptions &Opts, const llvm::Triple &Triple,
                     MacroBuilder &Builder) const override {
     DefineStd(Builder, "unix", Opts);
     Builder.defineMacro("__ELF__");
-    Builder.defineMacro("__CYTRIX__");
-    Builder.defineMacro("__Cytrix__");
+    Builder.defineMacro("__CHIMERA__");
+    Builder.defineMacro("__Chimera__");
     // We will uncomment and change these to the appropriate values once we
     //  get a userspace established
     /*
@@ -94,7 +94,7 @@ protected:
   }
 
 public:
-  CytrixTargetInfo(const llvm::Triple &Triple, const TargetOptions &Opts)
+  ChimeraTargetInfo(const llvm::Triple &Triple, const TargetOptions &Opts)
       : OSTargetInfo<Target>(Triple, Opts) {
     // Not sure that we will need this?
     //this->WIntType = TargetInfo::UnsignedInt;

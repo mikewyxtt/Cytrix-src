@@ -166,7 +166,7 @@ public:
 
     Ananas,
     CloudABI,
-    Cytrix,
+    Chimera,
     Darwin,
     DragonFly,
     FreeBSD,

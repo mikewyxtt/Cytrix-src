@@ -1,4 +1,4 @@
-//===--- Cytrix.cpp - Cytrix ToolChain Implementations --------*- C++ -*-===//
+//===--- Chimera.cpp - Chimera ToolChain Implementations --------*- C++ -*-===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
@@ -6,7 +6,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "Cytrix.h"
+#include "Chimera.h"
 #include "Arch/ARM.h"
 #include "Arch/Mips.h"
 #include "Arch/Sparc.h"
@@ -25,9 +25,9 @@ using namespace clang;
 using namespace llvm::opt;
 
 
-/// Cytrix - Cytrix tool chain which can call as(1) and ld(1) directly.
+/// Chimera - Chimera tool chain which can call as(1) and ld(1) directly.
 
-Cytrix::Cytrix(const Driver &D, const llvm::Triple &Triple,
+Chimera::Chimera(const Driver &D, const llvm::Triple &Triple,
                  const ArgList &Args)
     : Generic_ELF(D, Triple, Args) {
       // commented until userspace is developed
@@ -46,7 +46,7 @@ Cytrix::Cytrix(const Driver &D, const llvm::Triple &Triple,
 }
 
 
-void Cytrix::addLibCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
+void Chimera::addLibCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
                                     llvm::opt::ArgStringList &CC1Args) const {
   // commented until userspace is developed
   /*
@@ -55,7 +55,7 @@ void Cytrix::addLibCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
   */
 }
 
-void Cytrix::addLibStdCxxIncludePaths(
+void Chimera::addLibStdCxxIncludePaths(
     const llvm::opt::ArgList &DriverArgs,
     llvm::opt::ArgStringList &CC1Args) const {
   // commented until userspace is developed
@@ -65,7 +65,7 @@ void Cytrix::addLibStdCxxIncludePaths(
   */
 }
 
-void Cytrix::AddCXXStdlibLibArgs(const ArgList &Args,
+void Chimera::AddCXXStdlibLibArgs(const ArgList &Args,
                                   ArgStringList &CmdArgs) const {
   // commented until userspace is developed
   /*
@@ -86,14 +86,14 @@ void Cytrix::AddCXXStdlibLibArgs(const ArgList &Args,
 }
 
 
-Tool *Cytrix::buildAssembler() const { return new tools::gnutools::Assembler(*this); }
+Tool *Chimera::buildAssembler() const { return new tools::gnutools::Assembler(*this); }
 
-Tool *Cytrix::buildLinker() const { return new tools::gnutools::Linker(*this); }
+Tool *Chimera::buildLinker() const { return new tools::gnutools::Linker(*this); }
 
 
-bool Cytrix::HasNativeLLVMSupport() const { return true; }
+bool Chimera::HasNativeLLVMSupport() const { return true; }
 
-void Cytrix::addClangTargetOptions(const ArgList &DriverArgs,
+void Chimera::addClangTargetOptions(const ArgList &DriverArgs,
                                     ArgStringList &CC1Args,
                                     Action::OffloadKind) const {
   // commented until userspace is developed

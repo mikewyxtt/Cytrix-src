@@ -25,8 +25,8 @@
 #include <stdint.h>
 
 // Check if the compiler thinks you are targeting the wrong operating system.
-// #if !defined(__CYTRIX__)
-// #error "Cytrix must be compiled with the Cytrix clang compiler. Run 'make xtools' in the source tree root to build the cross compiler"
+// #if !defined(__CHIMERA__)
+// #error "Chimera must be compiled with the Chimera clang compiler. Run 'make xtools' in the source tree root to build the cross compiler"
 // #endif
  
 #if !defined(__i386__)
