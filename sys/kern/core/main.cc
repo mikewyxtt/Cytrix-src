@@ -22,23 +22,22 @@
  *
  */
 
-#include <kernel.h>
+#include <kernel.h> // deprecated soon
 
-namespace cytrix
-{
-    namespace kernel
+#include <kstdio.h>
+
+using namespace kstd;
+
+namespace kernel {
+    // called after all arch specific initialization is done
+    void main() 
     {
-        // called after all arch specific initialization is done
-        void main() 
+        log("Entered main()\n");
+        while(1)
         {
-
-            Console::log("Entered main().\n");
-            while(1)
-            {
-                //Main kernel loop to go here.
-                int i = 0;
-                i++;
-            }
+            //Main kernel loop to go here.
+            int i = 0;
+            i++;
         }
     }
 }

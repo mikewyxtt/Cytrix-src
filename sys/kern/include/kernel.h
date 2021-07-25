@@ -15,6 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+
 #ifndef __KERNEL_H__
 #define __KERNEL_H__
 
@@ -22,11 +23,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-
-// Headers from /sys/include
-#include <core/console/console.h>
-#include <panic.h>
-#include <iobus.h>
 
 // Check if the compiler thinks you are targeting the wrong operating system.
 // #if !defined(__CYTRIX__)

@@ -22,22 +22,21 @@
  *
  */
 
-#include <kernel.h>
+#include <kernel.h> // deprecated
 
-namespace cytrix
-{
-    namespace kernel
+#include <kstdio.h>
+using namespace kstd;
+
+namespace kernel {
+    extern void main();
+
+    // Jump in from entry.s
+    extern "C" void _init()
     {
-        extern void main();
+        log("Entered _init\n");
 
-        // Jump in from entry.s
-        extern "C" void _init()
-        {
-            Console::log("Entered _init\n");
-
-            // Begin main kernel loop
-            Console::log("Leaving _init\n");
-            main();
-        }
+        // Begin main kernel loop
+        log("Leaving _init\n");
+        main();
     }
 }
