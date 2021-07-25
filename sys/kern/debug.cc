@@ -22,7 +22,8 @@
  *
  */
 
-// If debugging is enabled, we create the LOG function. If not, we create empty macros so the code compiles but no code is actually built into the kernel
+// If debugging is enabled, we create the LOG function. If not, we created empty macros in debug.h so the code compiles
+//	but no code is actually built into the kernel
 #ifdef __DEBUG
 
 #include <kernel.h>
