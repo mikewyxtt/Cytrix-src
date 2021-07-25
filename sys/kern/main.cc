@@ -1,7 +1,7 @@
 /*
  * This file is a part of Chimera
  * 
- * Copyright (c) 2021
+ * Copyright © 2021
  * Michael Wyatt, All rights reserved.
  *
  * This file contains code from:
@@ -24,6 +24,7 @@
 
 #include <kernel.h>
 #include <debug.h>
+#include <io.h>
 
 namespace kernel {
 
