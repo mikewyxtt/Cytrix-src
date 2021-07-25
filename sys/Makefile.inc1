@@ -21,8 +21,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 ## Common kernel objects 
-OBJS:=	kern/lib/kstdio.o \
-		kern/core/main.o\
+OBJS:=	kern/main.o	\
 		kern/debug.o
 
 ## Arch specific kernel objects

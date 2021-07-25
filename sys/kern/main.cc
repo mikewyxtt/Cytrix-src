@@ -23,10 +23,7 @@
  */
 
 #include <kernel.h>
-#include <kstdio.h>
 #include <debug.h>
-
-using namespace kstd;
 
 namespace kernel {
 

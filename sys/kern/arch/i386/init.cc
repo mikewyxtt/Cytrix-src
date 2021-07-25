@@ -24,9 +24,6 @@
 
 #include <kernel.h>
 #include <debug.h>
-#include <kstdio.h>
-
-using namespace kstd;
 
 namespace kernel {
     extern void main();
