@@ -24,7 +24,6 @@
 
 #include <kernel.h>
 #include <debug.h>
-#include <io.h>
 
 namespace kernel {
 
@@ -32,7 +31,6 @@ namespace kernel {
     void main() 
     {
         LOG("Entered main.\n");
-
         while(1)
         {
             //Main kernel loop to go here.
