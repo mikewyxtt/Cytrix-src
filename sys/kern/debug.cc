@@ -55,21 +55,16 @@ namespace kernel {
 	// Sends one 'char' through the serial port
 	void SERIAL_OUT(char c)
 	{
-				while((inb(PORT + 5) & 0x20) == 0);		// ensure data transit is empty
+				while((inb(PORT + 5) & 0x20) == 0);		// Ensure data transit is empty
 				outb(PORT, c);
 	}
 
 	// Sends a string through the serial port
 	void LOG(const char *message)
 	{
-		// Calculate string length
-		int len = 0;
-		while (message[len])
-			len++;
-
-		// go through each 'char' in the string and send it through the serial port
-		for(int i = 0; i < len; i++)
-			SERIAL_OUT(message[i]);
+		// Print each char in the string
+		for(; *message; message++)
+			SERIAL_OUT(*message);
 	}
 }
 #endif // __DEBUG
